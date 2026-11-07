@@ -21,18 +21,18 @@ jobs:
             const NAG_COMMENT_MARKER = "<!-- stardrop-validate-issue-logs -->";
             const STALE_COMMENT_MARKER = "<!-- stardrop-stale-needs-log -->";
             const MANAGED_COMMENT_MARKERS = [NAG_COMMENT_MARKER, STALE_COMMENT_MARKER];
-            const LOG_GUIDE_URL = "https://floogen.gitbook.io/stardrop/resources/reporting-issues";
+            const LOG_GUIDE_URL = "https://github.com/kxgcayh/Stardrop-NativeMac/blob/development/CONTRIBUTING.md";
             const LOG_REQUIREMENTS = [
-              { name: "Stardrop log", pattern: /https?:\/\/(?:www\.)?pastebin\.com\/(?:raw\/)?[A-Za-z0-9]{6,}/ }
+              { name: "Junimod log", pattern: /https?:\/\/(?:www\.)?pastebin\.com\/(?:raw\/)?[A-Za-z0-9]{6,}/ }
             ];
 
             const NAG_COMMENT_BODY = [
               NAG_COMMENT_MARKER,
-              "Thanks for the report! A Stardrop log is required before this can be investigated.",
+              "Thanks for the report! A Junimod log is required before this can be investigated.",
               "",
-              `1. [Locate your Stardrop log](${LOG_GUIDE_URL})`,
+              `1. [Locate your Junimod log](${LOG_GUIDE_URL})`,
               "2. Upload the contents to https://pastebin.com",
-              "3. Edit the issue above and paste the resulting link into the **Stardrop log** field",
+              "3. Edit the issue above and paste the resulting link into the **Junimod log** field",
               "",
               "Editing the issue re-runs this check, so the `" + NEEDS_LOG_LABEL + "` label and this comment will clear on their own once a valid link is present."
             ].join("\n");

@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a problem with Stardrop
+description: Report a problem with Junimod
 title: "[Bug]: "
 labels:
   - bug
@@ -9,15 +9,15 @@ body:
       value: |
         Thanks for taking the time to report a bug!
 
-        A Stardrop log file is required when reporting issues. Reports without one cannot be investigated and will be marked `needs log` until a link is added.
+        A Junimod log file is required when reporting issues. Reports without one cannot be investigated and will be marked `needs log` until a link is added.
 
-        If your bug relates to SMAPI itself (such as mods not loading when starting the game from Stardrop), please include a SMAPI log as well.
+        If your bug relates to SMAPI itself (such as mods not loading when starting the game from Junimod), please include a SMAPI log as well.
 
   - type: input
-    id: stardrop-version
+    id: junimod-version
     attributes:
-      label: Stardrop version
-      description: Shown in the title bar and in Stardrop's settings window
+      label: Junimod version
+      description: Shown in Junimod's About window
       placeholder: 1.0.0
     validations:
       required: true
@@ -27,9 +27,7 @@ body:
     attributes:
       label: Operating system
       options:
-        - Windows
         - macOS
-        - Linux
     validations:
       required: true
 
@@ -42,12 +40,12 @@ body:
       required: true
 
   - type: input
-    id: stardrop-log
+    id: junimod-log
     attributes:
-      label: Stardrop log
+      label: Junimod log
       description: |
-        Follow https://floogen.gitbook.io/stardrop/resources/reporting-issues to locate your Stardrop log, upload the contents to https://pastebin.com then paste the resulting link below.
-      placeholder: https://pastebin.com/stardropLogLink
+        Follow https://github.com/kxgcayh/Stardrop-NativeMac/blob/development/CONTRIBUTING.md to locate your Junimod log, upload the contents to https://pastebin.com then paste the resulting link below.
+      placeholder: https://pastebin.com/junimodLogLink
     validations:
       required: true
 

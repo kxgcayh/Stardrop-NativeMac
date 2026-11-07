@@ -1,5 +1,5 @@
 name: Feature Request
-description: Suggest a new feature or improvement for Stardrop
+description: Suggest a new feature or improvement for Junimod
 title: "[Feature Request]: "
 labels:
   - enhancement
@@ -12,10 +12,10 @@ body:
         If you're reporting something that doesn't work as intended, open a bug report instead.
 
   - type: input
-    id: stardrop-version
+    id: junimod-version
     attributes:
-      label: Stardrop version
-      description: Shown in the title bar and in Stardrop's settings window. Please confirm you are on the latest release before requesting a feature.
+      label: Junimod version
+      description: Shown in Junimod's About window. Please confirm you are on the latest release before requesting a feature.
       placeholder: 1.0.0
     validations:
       required: true
