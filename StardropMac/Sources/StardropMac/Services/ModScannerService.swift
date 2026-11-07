@@ -86,6 +86,7 @@ public final class ModScannerService {
                 isEnabled: true
             )
         } catch {
+            ActionLogger.shared.logError("Failed to decode manifest at '\(manifestURL.path)'", error: error)
             print("Failed to decode manifest at \(manifestURL.path): \(error)")
             return nil
         }

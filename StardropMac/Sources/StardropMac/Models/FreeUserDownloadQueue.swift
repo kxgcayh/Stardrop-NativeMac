@@ -267,6 +267,7 @@ public final class CollectionQueueManager: ObservableObject {
         } catch {
             item.status = .failed(error.localizedDescription)
             statusMessage = "Failed \(item.mod.name): \(error.localizedDescription)"
+            ActionLogger.shared.logError("Collection queue: download failed for '\(item.mod.name)' (modId: \(modId), fileId: \(fileId))", error: error)
             return false
         }
     }

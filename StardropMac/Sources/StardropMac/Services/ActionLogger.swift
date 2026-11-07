@@ -17,7 +17,27 @@ public final class ActionLogger {
     }
 
     public func log(_ message: String) {
-        let line = "[\(dateFormatter.string(from: Date()))] \(message)\n"
+        write(prefix: "INFO ", message: message)
+    }
+
+    public func logWarning(_ message: String) {
+        write(prefix: "WARN ", message: message)
+    }
+
+    public func logError(_ message: String, error: Error? = nil) {
+        let full: String
+        if let error {
+            full = "\(message): \(error.localizedDescription)"
+        } else {
+            full = message
+        }
+        write(prefix: "ERROR", message: full)
+    }
+
+    // MARK: - Private
+
+    private func write(prefix: String, message: String) {
+        let line = "[\(dateFormatter.string(from: Date()))] [\(prefix)] \(message)\n"
         queue.async {
             try? self.fileManager.createDirectory(at: self.pathing.logsURL, withIntermediateDirectories: true)
             let url = self.logFileURL

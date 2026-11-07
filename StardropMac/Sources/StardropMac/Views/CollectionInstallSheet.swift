@@ -739,6 +739,7 @@ public struct CollectionInstallSheet: View {
                     self.state.refreshInstalledCollections()
                 }
             } catch {
+                ActionLogger.shared.logError("Collection installation failed for '\(manifest.info.name)'", error: error)
                 await MainActor.run {
                     self.isInstalling = false
                     self.errorMessage = "Installation failed: \(error.localizedDescription)"

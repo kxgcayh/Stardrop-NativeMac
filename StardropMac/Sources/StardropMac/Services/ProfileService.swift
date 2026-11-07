@@ -62,6 +62,7 @@ public final class ProfileService {
             let data = try jsonEncoder.encode(profile)
             try data.write(to: fileURL, options: .atomic)
         } catch {
+            ActionLogger.shared.logError("Failed to save profile '\(profile.name)'", error: error)
             print("Failed to save profile \(profile.name): \(error)")
         }
     }

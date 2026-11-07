@@ -46,9 +46,11 @@ public final class SMAPILauncherService: ObservableObject {
 
         // 3. Resolve executable
         guard let executable = smapiExecutable ?? pathing.resolveSmapiExecutable(gameDirectory: gameDirectory) else {
+            let msg = "Could not locate StardewModdingAPI executable at \(gameDirectory.path)"
             DispatchQueue.main.async {
-                self.launchError = "Could not locate StardewModdingAPI executable at \(gameDirectory.path)"
+                self.launchError = msg
             }
+            ActionLogger.shared.logError(msg)
             return
         }
 
@@ -76,11 +78,39 @@ public final class SMAPILauncherService: ObservableObject {
                 self.launchError = nil
             }
         } catch {
+            let description = Self.describelaunchError(error, executable: executable)
+            ActionLogger.shared.logError("SMAPI launch failed", error: error)
             DispatchQueue.main.async {
-                self.launchError = "Failed to start SMAPI: \(error.localizedDescription)"
+                self.launchError = description
                 self.isRunning = false
             }
         }
+    }
+
+    // MARK: - Error Helpers
+
+    private static func describelaunchError(_ error: Error, executable: URL) -> String {
+        let nsError = error as NSError
+        // EBADARCH (86) — executable built for a different CPU architecture.
+        // On Apple Silicon this typically means the SMAPI binary is x86_64
+        // and Rosetta 2 is not installed.
+        if nsError.domain == NSPOSIXErrorDomain && nsError.code == Int(EBADARCH) {
+            return """
+            SMAPI could not be launched because its executable is built for a different CPU \
+            architecture than the one your Mac is running.
+
+            If you are on an Apple Silicon Mac (M1/M2/M3/M4), Stardew Valley and SMAPI ship \
+            as Intel (x86_64) binaries and require Rosetta 2 to run.
+
+            To install Rosetta 2, open Terminal and run:
+                softwareupdate --install-rosetta
+
+            Then try launching SMAPI again.
+
+            Executable: \(executable.path)
+            """
+        }
+        return "Failed to start SMAPI: \(error.localizedDescription)\n\nExecutable: \(executable.path)"
     }
 
     public func stop() {

@@ -32,6 +32,7 @@ public final class SettingsService {
             let data = try jsonEncoder.encode(settings)
             try data.write(to: file, options: .atomic)
         } catch {
+            ActionLogger.shared.logError("Failed to save settings", error: error)
             print("Failed to save settings: \(error)")
         }
     }

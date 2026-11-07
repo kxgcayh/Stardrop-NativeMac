@@ -160,7 +160,9 @@ public final class CollectionService {
                         installedResults.append(contentsOf: summary.installedMods)
                         newlyInstalledUniqueIds.append(contentsOf: summary.installedMods.map { $0.uniqueID })
                     } catch {
-                        errors.append("Failed to install bundled '\(colMod.name)': \(error.localizedDescription)")
+                        let msg = "Failed to install bundled '\(colMod.name)': \(error.localizedDescription)"
+                        errors.append(msg)
+                        ActionLogger.shared.logError(msg)
                     }
                 } else {
                     warnings.append("Bundled file for '\(colMod.name)' not found in collection.")
@@ -208,7 +210,9 @@ public final class CollectionService {
 
                         targetArchiveURL = cachedFileURL
                     } catch {
-                        errors.append("Failed to download '\(colMod.name)': \(error.localizedDescription)")
+                        let msg = "Failed to download '\(colMod.name)': \(error.localizedDescription)"
+                        errors.append(msg)
+                        ActionLogger.shared.logError(msg)
                         continue
                     }
                 } else {
@@ -226,7 +230,9 @@ public final class CollectionService {
                         installedResults.append(contentsOf: summary.installedMods)
                         newlyInstalledUniqueIds.append(contentsOf: summary.installedMods.map { $0.uniqueID })
                     } catch {
-                        errors.append("Failed to install '\(colMod.name)': \(error.localizedDescription)")
+                        let msg = "Failed to install '\(colMod.name)': \(error.localizedDescription)"
+                        errors.append(msg)
+                        ActionLogger.shared.logError(msg)
                     }
                 }
                 continue

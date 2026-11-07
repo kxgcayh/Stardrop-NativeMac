@@ -37,6 +37,7 @@ public final class SeparatorService {
             let data = try jsonEncoder.encode(separators)
             try data.write(to: url, options: .atomic)
         } catch {
+            ActionLogger.shared.logError("Failed to save separators for profile '\(profileName)'", error: error)
             print("Failed to save separators for \(profileName): \(error)")
         }
     }

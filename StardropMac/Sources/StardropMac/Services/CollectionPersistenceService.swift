@@ -22,6 +22,7 @@ public final class CollectionPersistenceService {
             decoder.dateDecodingStrategy = .iso8601
             return try decoder.decode([InstalledCollection].self, from: data)
         } catch {
+            ActionLogger.shared.logError("Failed to decode installed collections", error: error)
             print("Failed to decode installed collections: \(error)")
             return []
         }
@@ -36,6 +37,7 @@ public final class CollectionPersistenceService {
             let data = try encoder.encode(collections)
             try data.write(to: storageFileURL, options: .atomic)
         } catch {
+            ActionLogger.shared.logError("Failed to save installed collections", error: error)
             print("Failed to save installed collections: \(error)")
         }
     }

@@ -558,6 +558,7 @@ public final class AppState: ObservableObject {
                 await self.fetchEndorsements()
             }
         } catch {
+            ActionLogger.shared.logError("Failed to fetch mod updates", error: error)
             print("Failed to fetch mod updates: \(error)")
             await MainActor.run {
                 self.isCheckingUpdates = false
@@ -1126,6 +1127,7 @@ public final class AppState: ObservableObject {
                 }
             }
         } catch {
+            ActionLogger.shared.logError("Failed to fetch endorsements from Nexus Mods", error: error)
             print("Failed to fetch endorsements from Nexus Mods: \(error)")
         }
     }
@@ -1186,6 +1188,7 @@ public final class AppState: ObservableObject {
                 ActionLogger.shared.log("Set endorsement for mod '\(mod.name)' to \(targetState ? "endorsed" : "abstained")")
             }
         } catch {
+            ActionLogger.shared.logError("Failed to toggle endorsement for mod '\(mod.name)' (modId: \(modId))", error: error)
             await MainActor.run {
                 for i in 0..<self.mods.count {
                     if self.mods[i].nexusModId == modId {
@@ -1283,6 +1286,7 @@ public final class AppState: ObservableObject {
                     messageLines.append("Warnings:")
                     for w in summary.warnings {
                         messageLines.append("• \(w)")
+                        ActionLogger.shared.logWarning("Mod install warning: \(w)")
                     }
                 }
 
@@ -1291,6 +1295,7 @@ public final class AppState: ObservableObject {
                     messageLines.append("Errors:")
                     for e in summary.errors {
                         messageLines.append("• \(e)")
+                        ActionLogger.shared.logError("Mod install error: \(e)")
                     }
                 }
 
@@ -1303,6 +1308,7 @@ public final class AppState: ObservableObject {
                 self.isInstallingMods = false
                 self.modInstallProgressMessage = nil
                 self.modInstallResultAlert = "Failed to install mods: \(error.localizedDescription)"
+                ActionLogger.shared.logError("Failed to install mods", error: error)
             }
         }
     }
@@ -1454,6 +1460,7 @@ public final class AppState: ObservableObject {
                     }
                 }
             } catch {
+                ActionLogger.shared.logError("Failed to check update for collection '\(col.slug)'", error: error)
                 print("Failed to check update for collection \(col.slug): \(error)")
             }
             CollectionPersistenceService.shared.addOrUpdateCollection(mutableCol)
@@ -1502,6 +1509,7 @@ public final class AppState: ObservableObject {
                 }
             }
         } catch {
+            ActionLogger.shared.logError("Failed to check update for collection '\(collection.name)'", error: error)
             await MainActor.run {
                 self.refreshInstalledCollections()
                 self.isCheckingCollectionUpdates = false
@@ -1673,6 +1681,7 @@ public final class AppState: ObservableObject {
             self.isInstallingMods = false
             self.modInstallProgressMessage = nil
             self.modInstallResultAlert = "Failed to download mod from Nexus: \(error.localizedDescription)"
+            ActionLogger.shared.logError("Failed to download NXM mod (modId: \(modId), fileId: \(fileId))", error: error)
         }
     }
 
@@ -1745,6 +1754,7 @@ public final class AppState: ObservableObject {
             self.isInstallingMods = false
             self.modInstallProgressMessage = nil
             self.modInstallResultAlert = "Failed to load collection from Nexus: \(error.localizedDescription)"
+            ActionLogger.shared.logError("Failed to load collection '\(slug)' from Nexus", error: error)
         }
     }
 
@@ -1836,6 +1846,7 @@ public final class AppState: ObservableObject {
                 do {
                     try fileManager.trashItem(at: mod.directoryURL, resultingItemURL: nil)
                 } catch {
+                    ActionLogger.shared.logError("Failed to move '\(mod.name)' to Trash, attempting force-remove", error: error)
                     try? fileManager.removeItem(at: mod.directoryURL)
                 }
             }

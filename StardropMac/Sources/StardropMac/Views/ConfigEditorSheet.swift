@@ -73,6 +73,7 @@ public struct ConfigEditorSheet: View {
             try configText.write(to: mod.configURL, atomically: true, encoding: .utf8)
             dismiss()
         } catch {
+            ActionLogger.shared.logError("Failed to save config for mod '\(mod.name)'", error: error)
             errorMessage = "Failed to save: \(error.localizedDescription)"
         }
     }

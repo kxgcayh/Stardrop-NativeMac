@@ -192,6 +192,7 @@ public struct NexusAccountSheet: View {
                 }
                 await state.fetchEndorsements()
             } catch {
+                ActionLogger.shared.logError("Failed to validate Nexus API key", error: error)
                 await MainActor.run {
                     isValidating = false
                     errorMessage = error.localizedDescription
